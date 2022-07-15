@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 const pg_1 = require("pg");
 dotenv_1.default.config();
-const { PG_HOST, PG_DB, PG_TEST_DB, PG_USER, PG_PASSWORD, ENV } = process.env;
+const { PG_HOST, PG_DB, PG_DB_TEST, PG_USER, PG_PASSWORD, ENV } = process.env;
 let client = new pg_1.Pool({
     host: PG_HOST,
     user: PG_USER,
@@ -19,7 +19,7 @@ if (ENV == 'test') {
         host: PG_HOST,
         user: PG_USER,
         password: PG_PASSWORD,
-        database: PG_TEST_DB
+        database: PG_DB_TEST
     });
 }
 exports.default = client;

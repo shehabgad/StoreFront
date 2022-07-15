@@ -6,7 +6,7 @@ const
   {
     PG_HOST,
     PG_DB,
-    PG_TEST_DB,
+    PG_DB_TEST,
     PG_USER,
     PG_PASSWORD,
     ENV
@@ -23,7 +23,7 @@ if (ENV == 'test') {
     host: PG_HOST,
     user: PG_USER,
     password: PG_PASSWORD,
-    database: PG_TEST_DB
+    database: PG_DB_TEST
   });
 }
 export default client

@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc && node dist/index.js",
-    "watch": "tsc-watch server.ts --outDir ./src --onSuccess 'node src/server.ts'",
-    "test": "SET ENV=test db-migrate --env test up && jasmine-ts && db-migrate db:drop test",
-    "jasmine": "jasmine"
+    "start-test": "cross-env ENV=test node dist/index.js",
+    "test": "cross-env ENV=dev db-migrate up -e test && tsc && cross-env ENV=test jasmine && db-migrate down -e test"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +25,7 @@
     "@types/jasmine": "^4.0.3",
     "@types/node": "^18.0.4",
     "@types/pg": "^8.6.5",
+    "cross-env": "^7.0.3",
     "jasmine": "^4.2.1",
     "jasmine-spec-reporter": "^7.0.0",
     "jasmine-ts": "^0.4.0",
