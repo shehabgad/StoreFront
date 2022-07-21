@@ -6,7 +6,10 @@
   "scripts": {
     "start": "tsc && node dist/index.js",
     "start-test": "cross-env ENV=test node dist/index.js",
-    "test": "db-migrate up -e test && tsc && cross-env ENV=test jasmine && db-migrate down -e test"
+    "test": "db-migrate up -e test && tsc && cross-env ENV=test jasmine && db-migrate down -e test",
+    "format": "prettier --write src/**/*.ts",
+    "lint":"eslint . --ext .ts"
+    ,"lint-fix": "eslint . --ext .ts --fix"
   },
   "author": "",
   "license": "ISC",
@@ -28,10 +31,14 @@
     "@types/jasmine": "^4.0.3",
     "@types/node": "^18.0.4",
     "@types/pg": "^8.6.5",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
     "cross-env": "^7.0.3",
+    "eslint": "^8.20.0",
     "jasmine": "^4.2.1",
     "jasmine-spec-reporter": "^7.0.0",
     "jasmine-ts": "^0.4.0",
+    "prettier": "^2.7.1",
     "ts-node": "^10.8.2",
     "tsc-watch": "^5.0.3"
   },

@@ -1,22 +1,21 @@
-import client from '../database'
+import client from '../database';
 export type Plant = {
-  id: Number;
+  id: number;
   name: string;
-  individuals: Number;
+  individuals: number;
   sightingDate: Date;
   description: string;
-}
+};
 export class Plants {
   async index(): Promise<Plant[]> {
     try {
-      const conn = await client.connect()
-      const sql = "SELECT * FROM plants;"
+      const conn = await client.connect();
+      const sql = 'SELECT * FROM plants;';
       const result = await conn.query(sql);
-      conn.release()
-      return result.rows
+      conn.release();
+      return result.rows;
     } catch (err) {
-      throw new Error(`cannot get plants ${err}`)
+      throw new Error(`cannot get plants ${err}`);
     }
-
   }
 }
