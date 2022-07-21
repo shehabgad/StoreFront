@@ -6,18 +6,21 @@
   "scripts": {
     "start": "tsc && node dist/index.js",
     "start-test": "cross-env ENV=test node dist/index.js",
-    "test": "cross-env ENV=dev db-migrate up -e test && tsc && cross-env ENV=test jasmine && db-migrate down -e test"
+    "test": "db-migrate up -e test && tsc && cross-env ENV=test jasmine && db-migrate down -e test"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/express": "^4.17.13",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "global": "^4.4.0",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
     "typescript": "^4.7.4"
   },

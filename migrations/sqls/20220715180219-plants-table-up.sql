@@ -1,4 +1,4 @@
-CREATE TABLE plants 
+CREATE TABLE IF NOT EXISTS plants 
 (
     name varchar(100),
     description text,

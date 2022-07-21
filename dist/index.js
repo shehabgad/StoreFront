@@ -13,11 +13,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const body_parser_1 = __importDefault(require("body-parser"));
 const database_1 = __importDefault(require("./database"));
+const plant_1 = __importDefault(require("./handlers/plant"));
+const user_1 = __importDefault(require("./handlers/user"));
+// import cors from 'cors'
 const app = (0, express_1.default)();
 const address = "0.0.0.0:3000";
-app.use(body_parser_1.default.json());
+// const corsOptions = {
+//   origin: "https://somedomain.com",
+//   optionSuccessStatus: 2S00
+// }
+// app.use(cors(corsOptions))
+app.use(express_1.default.json());
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const connection = yield database_1.default.connect();
     const query = 'SELECT * FROM plants'; // Create a query to select all students
@@ -25,6 +32,8 @@ app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     connection.release(); // Release the connection
     res.send(results.rows); // Send the results
 }));
+(0, plant_1.default)(app);
+(0, user_1.default)(app);
 app.listen(3000, () => {
     console.log(`starting app on : ${address}`);
 });
