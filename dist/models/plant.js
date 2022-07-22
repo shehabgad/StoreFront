@@ -19,7 +19,7 @@ class Plants {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();
-                const sql = "SELECT * FROM plants;";
+                const sql = 'SELECT * FROM plants;';
                 const result = yield conn.query(sql);
                 conn.release();
                 return result.rows;

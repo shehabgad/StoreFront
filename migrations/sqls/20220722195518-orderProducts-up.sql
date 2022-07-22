@@ -1,0 +1,6 @@
+CREATE TABLE orderProducts (
+  order_id INTEGER REFERENCES orders(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  product_id INTEGER REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  quantity INTEGER NOT NULL,
+  PRIMARY KEY (order_id,product_id)
+);

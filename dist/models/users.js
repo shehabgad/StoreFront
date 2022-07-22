@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Users = void 0;
 const database_1 = __importDefault(require("../database"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
 dotenv_1.default.config();
-const bcrypt = require('bcrypt');
 const { SALT_ROUNDS, PEPPER } = process.env;
 class Users {
     index() {
@@ -33,14 +33,28 @@ class Users {
             }
         });
     }
-    signUp(name, password) {
+    getUser(userName) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();
-                const sql = 'INSERT INTO users (name,password_digest) VALUES ($1,$2) RETURNING *';
+                const sql = `SELECT * FROM users WHERE userName = '${userName}';`;
+                const result = yield conn.query(sql);
+                conn.release();
+                return result.rows[0];
+            }
+            catch (err) {
+                throw new Error(`cannot get product ${err}`);
+            }
+        });
+    }
+    create(userName, firstName, lastName, password) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const conn = yield database_1.default.connect();
+                const sql = 'INSERT INTO users (userName,firstName,lastName,password) VALUES ($1,$2,$3,$4) RETURNING *';
                 const salt_rounds = '' + SALT_ROUNDS;
-                const hash = bcrypt.hashSync(password + PEPPER, parseInt(salt_rounds));
-                const result = yield conn.query(sql, [name, hash]);
+                const hash = bcrypt_1.default.hashSync(password + PEPPER, parseInt(salt_rounds));
+                const result = yield conn.query(sql, [userName, firstName, lastName, hash]);
                 conn.release();
                 return result.rows[0];
             }
@@ -49,14 +63,30 @@ class Users {
             }
         });
     }
-    signIn(name, password) {
+    updateOne(firstName, lastName, password, userName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const conn = yield database_1.default.connect();
+                const salt_rounds = '' + SALT_ROUNDS;
+                const hash = bcrypt_1.default.hashSync(password + PEPPER, parseInt(salt_rounds));
+                const sql = "UPDATE users SET firstName =($1), lastName =($2), password=($3) WHERE userName = ($4) RETURNING *";
+                const result = yield conn.query(sql, [firstName, lastName, hash, userName]);
+                conn.release();
+                return result.rows[0];
+            }
+            catch (err) {
+                throw new Error("cannot update user");
+            }
+        });
+    }
+    login(userName, password) {
         return __awaiter(this, void 0, void 0, function* () {
             const conn = yield database_1.default.connect();
-            const sql = 'SELECT * from users WHERE name = $1';
-            const result = yield conn.query(sql, [name]);
+            const sql = 'SELECT * from users WHERE userName = ($1)';
+            const result = yield conn.query(sql, [userName]);
             if (result.rows.length) {
                 const user = result.rows[0];
-                if (bcrypt.compareSync(password + PEPPER, user.password_digest)) {
+                if (bcrypt_1.default.compareSync(password + PEPPER, user.password)) {
                     return user;
                 }
             }

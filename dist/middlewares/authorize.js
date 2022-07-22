@@ -9,22 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const plant_1 = require("../models/plant");
-const jwt = require("jsonwebtoken");
-const store = new plant_1.Plants();
-const index = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const jwt = require('jsonwebtoken');
+const authorization = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        jwt.verify(_req.body.token, process.env.TOKEN_SECRET);
+        const header = '' + req.headers.authorization;
+        const token = header.split(' ')[1];
+        jwt.verify(token, process.env.TOKEN_SECRET);
     }
     catch (err) {
         res.status(401);
-        res.json(`Invalid token ${err}`);
+        res.json("Acess denied, invalid token");
         return;
     }
-    const plants = yield store.index();
-    res.json(plants);
+    next();
 });
-const plant_routes = (app) => {
-    app.get('/plants', index);
-};
-exports.default = plant_routes;
+exports.default = authorization;

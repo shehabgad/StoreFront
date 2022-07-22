@@ -8,15 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const plant_1 = require("../plant");
-const store = new plant_1.Plants();
-describe('Plant model ', () => {
-    it("should have an index method", () => {
-        expect(store.index).toBeDefined();
-    });
-    it("index method should return a list of plants", () => __awaiter(void 0, void 0, void 0, function* () {
-        const result = yield store.index();
-        expect(result).toEqual([]);
+const supertest_1 = __importDefault(require("supertest"));
+const index_1 = require("../../index");
+const request = (0, supertest_1.default)(index_1.app);
+describe('Testing users endpoint responses', () => {
+    it('get request to /users  without token should return status code 401', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield request.get('/users');
+        expect(response.status).toBe(401);
     }));
 });
