@@ -4,9 +4,10 @@ import products_routes from './handlers/products';
 import orders_routes from './handlers/orders';
 import orderProducts_routes from './handlers/orderProducts';
 import cors from 'cors';
-// const cors = require('cors')
+import dotenv from 'dotenv';
+dotenv.config();
 export const app: express.Application = express();
-const address = '0.0.0.0:3000';
+
 const corsOptions = {
   origin: 'https://somedomain.com',
   optionSuccessStatus: 200,
@@ -18,6 +19,5 @@ users_routes(app);
 products_routes(app);
 orders_routes(app);
 orderProducts_routes(app);
-app.listen(3000, () => {
-  console.log(`starting app on : ${address}`);
+app.listen(parseInt(process.env.PORT + ""), () => {
 });

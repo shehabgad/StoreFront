@@ -54,7 +54,12 @@ class Users {
                 const sql = 'INSERT INTO users (userName,firstName,lastName,password) VALUES ($1,$2,$3,$4) RETURNING *';
                 const salt_rounds = '' + SALT_ROUNDS;
                 const hash = bcrypt_1.default.hashSync(password + PEPPER, parseInt(salt_rounds));
-                const result = yield conn.query(sql, [userName, firstName, lastName, hash]);
+                const result = yield conn.query(sql, [
+                    userName,
+                    firstName,
+                    lastName,
+                    hash,
+                ]);
                 conn.release();
                 return result.rows[0];
             }
@@ -69,13 +74,18 @@ class Users {
                 const conn = yield database_1.default.connect();
                 const salt_rounds = '' + SALT_ROUNDS;
                 const hash = bcrypt_1.default.hashSync(password + PEPPER, parseInt(salt_rounds));
-                const sql = "UPDATE users SET firstName =($1), lastName =($2), password=($3) WHERE userName = ($4) RETURNING *";
-                const result = yield conn.query(sql, [firstName, lastName, hash, userName]);
+                const sql = 'UPDATE users SET firstName =($1), lastName =($2), password=($3) WHERE userName = ($4) RETURNING *';
+                const result = yield conn.query(sql, [
+                    firstName,
+                    lastName,
+                    hash,
+                    userName,
+                ]);
                 conn.release();
                 return result.rows[0];
             }
             catch (err) {
-                throw new Error("cannot update user");
+                throw new Error('cannot update user');
             }
         });
     }

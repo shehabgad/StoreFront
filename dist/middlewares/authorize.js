@@ -8,18 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authorization = void 0;
-const jwt = require('jsonwebtoken');
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const authorization = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const header = '' + req.headers.authorization;
         const token = header.split(' ')[1];
-        jwt.verify(token, process.env.TOKEN_SECRET);
+        jsonwebtoken_1.default.verify(token, process.env.TOKEN_SECRET + '');
     }
     catch (err) {
         res.status(401);
-        res.json("Acess denied, invalid token");
+        res.json('Acess denied, invalid token');
         return;
     }
     next();

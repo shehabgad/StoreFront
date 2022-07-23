@@ -17,69 +17,68 @@ const database_1 = __importDefault(require("../../database"));
 const store = new products_1.Products();
 const product = {
     id: 1,
-    name: "a nice product",
-    price: 50
+    name: 'a nice product',
+    price: 50,
 };
 describe('Products model ', () => {
     beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
         const conn = yield database_1.default.connect();
         const sql = 'INSERT INTO products (name,price) VALUES ($1,$2) RETURNING *';
-        const result = yield conn.query(sql, ["a nice product", 50]);
+        yield conn.query(sql, ['a nice product', 50]);
         conn.release();
     }));
     afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const conn = yield database_1.default.connect();
-            let sql = "DELETE FROM users;\nALTER SEQUENCE users_id_seq RESTART WITH 1;";
+            let sql = 'DELETE FROM users;\nALTER SEQUENCE users_id_seq RESTART WITH 1;';
             yield conn.query(sql);
-            sql = "DELETE FROM products;\nALTER SEQUENCE products_id_seq RESTART WITH 1;";
+            sql =
+                'DELETE FROM products;\nALTER SEQUENCE products_id_seq RESTART WITH 1;';
             yield conn.query(sql);
-            sql = "DELETE FROM orders;\nALTER SEQUENCE orders_id_seq RESTART WITH 1;";
+            sql = 'DELETE FROM orders;\nALTER SEQUENCE orders_id_seq RESTART WITH 1;';
             yield conn.query(sql);
             conn.release();
         }
         catch (err) {
-            throw new Error(err + "");
+            throw new Error(err + '');
         }
     }));
-    it("should have an index method", () => {
+    it('should have an index method', () => {
         expect(store.index).toBeDefined();
     });
-    it("should have a show method", () => {
+    it('should have a show method', () => {
         expect(store.show).toBeDefined();
     });
-    it("should have an create method", () => {
+    it('should have an create method', () => {
         expect(store.create).toBeDefined();
     });
-    it("should have an update method", () => {
+    it('should have an update method', () => {
         expect(store.update).toBeDefined();
     });
-    it("should have a delete method", () => {
+    it('should have a delete method', () => {
         expect(store.delete).toBeDefined();
     });
-    it("index method should return a list of all products", () => __awaiter(void 0, void 0, void 0, function* () {
+    it('index method should return a list of all products', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield store.index();
-        expect(result).toEqual([
-            product
-        ]);
+        expect(result).toEqual([product]);
     }));
-    it("get method should return a product with the provided id", () => __awaiter(void 0, void 0, void 0, function* () {
+    it('get method should return a product with the provided id', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield store.show(1);
         expect(result).toEqual(product);
     }));
-    it("create method should create a new product and return the data of the created product", () => __awaiter(void 0, void 0, void 0, function* () {
-        const result = yield store.create("a nice product 2", 45);
+    it('create method should create a new product and return the data of the created product', () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield store.create('a nice product 2', 45);
         expect(result).toBeDefined();
     }));
-    it("update method should update product with a certain id and return the updated data of the user", () => __awaiter(void 0, void 0, void 0, function* () {
+    it('update method should update product with a certain id and return the updated data of the user', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield store.update({
             id: 2,
-            name: "not nice product",
-            price: 556
+            name: 'not nice product',
+            price: 556,
         });
         expect(result).toBeDefined();
     }));
-    it("delete method should delete a product provided the id and return the deleted data", () => __awaiter(void 0, void 0, void 0, function* () {
+    it('delete method should delete a product provided the id and return the deleted data', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield store.delete(1);
         expect(result).toBeDefined();
     }));

@@ -14,8 +14,8 @@ const cors_1 = __importDefault(require("cors"));
 exports.app = (0, express_1.default)();
 const address = '0.0.0.0:3000';
 const corsOptions = {
-    origin: "https://somedomain.com",
-    optionSuccessStatus: 200
+    origin: 'https://somedomain.com',
+    optionSuccessStatus: 200,
 };
 exports.app.use((0, cors_1.default)(corsOptions));
 exports.app.use(express_1.default.json());

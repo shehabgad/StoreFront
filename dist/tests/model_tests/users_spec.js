@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const users_1 = require("../../models/users");
 const database_1 = __importDefault(require("../../database"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
 dotenv_1.default.config();
-const bcrypt = require('bcrypt');
 const store = new users_1.Users();
 let user;
 describe('Users model ', () => {
@@ -24,61 +24,60 @@ describe('Users model ', () => {
         const conn = yield database_1.default.connect();
         const sql = 'INSERT INTO users (userName,firstName,lastName,password) VALUES ($1,$2,$3,$4) RETURNING *';
         const salt_rounds = '' + process.env.SALT_ROUNDS;
-        const hash = bcrypt.hashSync("password123" + process.env.PEPPER, parseInt(salt_rounds));
-        const result = yield conn.query(sql, ["shehabgad", "shehab", "gad", hash]);
+        const hash = bcrypt_1.default.hashSync('password123' + process.env.PEPPER, parseInt(salt_rounds));
+        const result = yield conn.query(sql, ['shehabgad', 'shehab', 'gad', hash]);
         user = result.rows[0];
         conn.release();
     }));
     afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const conn = yield database_1.default.connect();
-            let sql = "DELETE FROM users;\nALTER SEQUENCE users_id_seq RESTART WITH 1;";
+            let sql = 'DELETE FROM users;\nALTER SEQUENCE users_id_seq RESTART WITH 1;';
             yield conn.query(sql);
-            sql = "DELETE FROM products;\nALTER SEQUENCE products_id_seq RESTART WITH 1;";
+            sql =
+                'DELETE FROM products;\nALTER SEQUENCE products_id_seq RESTART WITH 1;';
             yield conn.query(sql);
-            sql = "DELETE FROM orders;\nALTER SEQUENCE orders_id_seq RESTART WITH 1;";
+            sql = 'DELETE FROM orders;\nALTER SEQUENCE orders_id_seq RESTART WITH 1;';
             yield conn.query(sql);
             conn.release();
         }
         catch (err) {
-            throw new Error(err + "");
+            throw new Error(err + '');
         }
     }));
-    it("should have an index method", () => {
+    it('should have an index method', () => {
         expect(store.index).toBeDefined();
     });
-    it("should have a getUser method", () => {
+    it('should have a getUser method', () => {
         expect(store.getUser).toBeDefined();
     });
-    it("should have an create method", () => {
+    it('should have an create method', () => {
         expect(store.create).toBeDefined();
     });
-    it("should have an updateOne method", () => {
+    it('should have an updateOne method', () => {
         expect(store.updateOne).toBeDefined();
     });
-    it("should have a login method", () => {
+    it('should have a login method', () => {
         expect(store.login).toBeDefined();
     });
-    it("index method should return a list of all users", () => __awaiter(void 0, void 0, void 0, function* () {
+    it('index method should return a list of all users', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield store.index();
-        expect(result).toEqual([
-            user
-        ]);
+        expect(result).toEqual([user]);
     }));
-    it("get method should return a user with the provided username", () => __awaiter(void 0, void 0, void 0, function* () {
-        const result = yield store.getUser("shehabgad");
+    it('get method should return a user with the provided username', () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield store.getUser('shehabgad');
         expect(result).toEqual(user);
     }));
-    it("create method should create a new user and return the data of the created user", () => __awaiter(void 0, void 0, void 0, function* () {
-        const result = yield store.create("tarekgad", "tarek", "gad", "password321");
+    it('create method should create a new user and return the data of the created user', () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield store.create('tarekgad', 'tarek', 'gad', 'password321');
         expect(result).toBeDefined();
     }));
-    it("update method should update user with a certain username and return the updated data of the user", () => __awaiter(void 0, void 0, void 0, function* () {
-        const result = yield store.updateOne("mohamed", "ahmed", "56533711", "shehabgad");
+    it('update method should update user with a certain username and return the updated data of the user', () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield store.updateOne('mohamed', 'ahmed', '56533711', 'shehabgad');
         expect(result).toBeDefined();
     }));
-    it("login method should return a user provided the username and password", () => __awaiter(void 0, void 0, void 0, function* () {
-        const result = yield store.login("shehabgad", "56533711");
+    it('login method should return a user provided the username and password', () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield store.login('shehabgad', '56533711');
         expect(result).not.toBeNull();
     }));
 });

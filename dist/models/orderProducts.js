@@ -61,13 +61,13 @@ class OrderProducts {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();
-                const sql = "UPDATE orderProducts SET quantity =($1) WHERE order_id = ($2) AND product_id = ($3) RETURNING *";
+                const sql = 'UPDATE orderProducts SET quantity =($1) WHERE order_id = ($2) AND product_id = ($3) RETURNING *';
                 const result = yield conn.query(sql, [quantity, order_id, product_id]);
                 conn.release();
                 return result.rows[0];
             }
             catch (err) {
-                throw new Error("cannot update order_product");
+                throw new Error('cannot update order_product');
             }
         });
     }

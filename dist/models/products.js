@@ -61,13 +61,17 @@ class Products {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();
-                const sql = "UPDATE products SET name =($1), price =($2) WHERE id = ($3) RETURNING *";
-                const result = yield conn.query(sql, [product.name, product.price, product.id]);
+                const sql = 'UPDATE products SET name =($1), price =($2) WHERE id = ($3) RETURNING *';
+                const result = yield conn.query(sql, [
+                    product.name,
+                    product.price,
+                    product.id,
+                ]);
                 conn.release();
                 return result.rows[0];
             }
             catch (err) {
-                throw new Error("cannot update product");
+                throw new Error('cannot update product');
             }
         });
     }
@@ -80,7 +84,7 @@ class Products {
                 return result.rows[0];
             }
             catch (err) {
-                throw new Error("cannot delete product");
+                throw new Error('cannot delete product');
             }
         });
     }

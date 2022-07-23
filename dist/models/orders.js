@@ -89,13 +89,13 @@ class Orders {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();
-                const sql = "UPDATE orders SET status = ($1) WHERE id = ($2) RETURNING *";
+                const sql = 'UPDATE orders SET status = ($1) WHERE id = ($2) RETURNING *';
                 const result = yield conn.query(sql, [status, id]);
                 conn.release();
                 return result.rows[0];
             }
             catch (err) {
-                throw new Error("cannot update order");
+                throw new Error('cannot update order');
             }
         });
     }
@@ -108,7 +108,7 @@ class Orders {
                 return result.rows[0];
             }
             catch (err) {
-                throw new Error("cannot delete order");
+                throw new Error('cannot delete order');
             }
         });
     }

@@ -16,7 +16,7 @@ const users_1 = require("../models/users");
 const authorize_1 = require("../middlewares/authorize");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const store = new users_1.Users();
-const TOKEN_SECRET = process.env.TOKEN_SECRET + "";
+const TOKEN_SECRET = process.env.TOKEN_SECRET + '';
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield store.index();
     res.json(users);
@@ -28,7 +28,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json(token);
     }
     else {
-        res.json("username or password is incorrect");
+        res.json('username or password is incorrect');
     }
 });
 const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -39,7 +39,7 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield store.getUser(req.params.username);
     if (user === undefined) {
-        res.json("no such user exists");
+        res.json('no such user exists');
         return;
     }
     res.json(user);
