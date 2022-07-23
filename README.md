@@ -61,6 +61,20 @@ Before submitting your project, spin it up and test each endpoint. If each one r
 to install all required dependencies run
 `npm install`
 
+### setting the database
+creating the databases 
+```sql
+CREATE DATABASE dev_db;
+```
+```sql
+CREATE DATABASE test_db;
+```
+
+to create all the tables needed for the project simply run `npx db-migrate up`
+
+connecting to db
+`\c dev_db`
+
 ### setup enviroment
 
 First, create a `.env` file with all the required variables
