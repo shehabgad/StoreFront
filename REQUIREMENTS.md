@@ -25,6 +25,429 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Current Order by user (args: user id)[token required]
 - [OPTIONAL] Completed Orders by user (args: user id)[token required]
 
+## API Endpoints
+
+<!-- start -->
+
+- create user
+
+  - HTTP verb `POST`
+  - Endpoint:- `/users`
+  - Request Body
+
+    ```json
+    {
+      "username": "shehabgad",
+      "firstname": "shehab",
+      "lastname": "gad",
+      "password": "password123"
+    }
+    ```
+
+  - Response Body -- `a json web token`
+
+            ```json
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyIjp7ImlkIjoxLCJmaXJzdG5hbWUiOiJzaGVoYWIiLCJsYXN0bmFtZSI6ImdhZCIsInVzZXJuYW1lIjoic2hlaGFiZ2FkIiwicGFzc3dvcmQiOiIkMmIkMTAkdGJIbG5CZWI4bGE1R2s3OFNJQTluZS5ORnJHMlp5eE5SclJzQ05JaHBJWWRlRG9uL2xkVi4ifSwiaWF0IjoxNjU4NTQyNDk4fQ.kMpRu6aYuCnnrI2_1n_iWbJWSwabBeuGpgCT3mC0LQo"
+            ```
+
+        <!-- end -->
+
+    <!-- start -->
+
+- get users **`token required`**
+
+  - HTTP verb `GET`
+  - Endpoint:- `/users`
+  - Request Body
+
+    ```json
+    N/A
+    ```
+
+  - Response Body -- `an array of all users`
+
+        ```json
+        [
+          {
+            "id": 1,
+            "firstname": "shehab",
+            "lastname": "gad",
+            "username": "shehabgad",
+            "password": "$2b$10$tbHlnBeb8la5Gk78SIA9ne.NFrG2ZyxNRrRsCNIhpIYdeDon/ldV."
+          }
+        ]
+        ```
+
+- get a user with a certain username **`token required`**
+
+  - HTTP verb `GET`
+  - Endpoint:- `/users/:username`
+  - Request Body
+
+    ```json
+    N/A
+    ```
+
+  - Response Body -- `the user information with the provided username`
+
+        ```json
+          {
+            "id": 1,
+            "firstname": "shehab",
+            "lastname": "gad",
+            "username": "shehabgad",
+            "password": "$2b$10$tbHlnBeb8la5Gk78SIA9ne.NFrG2ZyxNRrRsCNIhpIYdeDon/ldV."
+          }
+        ```
+
+- login and get an authentication token with the provided username and password
+
+  - HTTP verb `POST`
+  - Endpoint:- `/users/login`
+  - Request Body
+
+    ```json
+    {
+      "username": "shehabgad",
+      "password": "password123"
+    }
+    ```
+
+  - Response Body -- `the json token`
+
+        ```json
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyIjp7ImlkIjoxLCJmaXJzdG5hbWUiOiJzaGVoYWIiLCJsYXN0bmFtZSI6ImdhZCIsInVzZXJuYW1lIjoic2hlaGFiZ2FkIiwicGFzc3dvcmQiOiIkMmIkMTAkdGJIbG5CZWI4bGE1R2s3OFNJQTluZS5ORnJHMlp5eE5SclJzQ05JaHBJWWRlRG9uL2xkVi4ifSwiaWF0IjoxNjU4NTQzMDQzfQ.4H_V-5Ue5DqFaE6gXoEN5PozF1jyUiCm2aLxbS51rV8"
+        ```
+
+- update user information **`token required`**
+
+  - HTTP verb `PUT`
+  - Endpoint:- `/users`
+  - Request Body
+
+    ```json
+    {
+      "username": "shehabgad",
+      "firstname": "Shehab",
+      "lastname": "Gad",
+      "password": "password12356"
+    }
+    ```
+
+  - Response Body -- `the new user information updated`
+
+        ```json
+          {
+            "id": 1,
+            "firstname": "Shehab",
+            "lastname": "Gad",
+            "username": "shehabgad",
+            "password": "$2b$10$kF/imuwi4Q1okZQYpSXEWOkf6Q4YjITW46dUtIjlXvEW2DlrN2vQu"
+          }
+        ```
+
+    <!-- end -->
+
+- get Products
+
+  - HTTP verb `GET`
+  - Endpoint:- `/products`
+  - Request Body
+
+    ```json
+    N/A
+    ```
+
+  - Response Body -- `array of all products`
+
+        ```json
+          [
+            {
+                "id": 1,
+                "name": "product1",
+                "price": 55
+            }
+          ]
+        ```
+
+- create Product **`token required`**
+
+  - HTTP verb `POST`
+  - Endpoint:- `/products`
+  - Request Body
+
+    ```json
+    {
+      "name": "product2",
+      "price": "60"
+    }
+    ```
+
+  - Response Body -- `the product information that was just put into the database`
+
+        ```json
+        {
+          "id": 2,
+          "name": "product2",
+          "price": 60
+        }
+        ```
+
+- get Product
+
+  - HTTP verb `GET`
+  - Endpoint:- `/products/:id`
+  - Request Body
+
+    ```json
+    N/A
+    ```
+
+  - Response Body -- `the product with the provided id`
+
+        ```json
+        {
+          "id": 2,
+          "name": "product2",
+          "price": 60
+        }
+        ```
+
+- update a Product **`token required`**
+
+  - HTTP verb `PUT`
+  - Endpoint:- `/products`
+  - Request Body
+
+    ```json
+    {
+      "product": {
+        "id": "2",
+        "name": "Product two",
+        "price": "12"
+      }
+    }
+    ```
+
+  - Response Body -- `the product after update`
+
+        ```json
+
+        {
+          "id": 2,
+          "name": "Product two",
+          "price": 12
+        }
+
+- delete a Product **`token required`**
+
+  - HTTP verb `DELETE`
+  - Endpoint:- `/products`
+  - Request Body
+
+    ```json
+    {
+      "id": "2"
+    }
+    ```
+
+  - Response Body -- `the product that was deleted`
+
+        ```json
+
+        {
+          "id": 2,
+          "name": "Product two",
+          "price": 12
+        }
+
+- create order **`token required`**
+
+  - HTTP verb `POST`
+  - Endpoint:- `/orders`
+  - Request Body
+
+    ```json
+    {
+      "user_id": "1",
+      "status": "active",
+      "products": [
+        {
+          "id": "1",
+          "quantity": "5"
+        }
+      ]
+    }
+    ```
+
+  - Response Body -- `the order that was just added`
+
+        ```json
+
+        {
+        "id": 1,
+        "status": "active",
+        "user_id": 1,
+        "orderProducts": [
+        {
+        "order_id": 1,
+        "product_id": 1,
+        "quantity": 5
+        }
+        ]
+        }
+
+    ```
+
+    ```
+
+- get orders **`token required`**
+
+  - HTTP verb `POST`
+  - Endpoint:- `/orders`
+  - Request Body
+
+    ```json
+    N/A
+    ```
+
+  - Response Body -- `array of all orders`
+
+        ```json
+            {
+        "id": 1,
+        "status": "active",
+        "user_id": 1,
+        "orderProducts": [
+            {
+                "order_id": 1,
+                "product_id": 1,
+                "quantity": 5
+            }
+        ]
+
+        }
+
+    ```
+
+    ```
+
+- get order with an id **`token required`**
+
+  - HTTP verb `GET`
+  - Endpoint:- `/orders/:id`
+  - Request Body
+
+    ```json
+    N/A
+    ```
+
+  - Response Body -- `the order with the provided id`
+
+        ```json
+            {
+          "id": 1,
+          "status": "active",
+          "user_id": 1,
+          "orderProducts": [
+              {
+                  "order_id": 1,
+                  "product_id": 1,
+                  "quantity": 5
+              }
+          ]
+
+            }
+
+    ```
+
+    ```
+
+- get all orders with a certain user with a provided id has made **`token required`**
+
+  - HTTP verb `GET`
+  - Endpoint:- `/orders/users/:user_id`
+  - Request Body
+
+    ```json
+    N/A
+    ```
+
+  - Response Body -- `array of orders made by the provided user (given the id)`
+
+        ```json
+            [
+                {
+                    "id": 1,
+                    "status": "active",
+                    "user_id": 1,
+                    "orderProducts": [
+                        {
+                            "order_id": 1,
+                            "product_id": 1,
+                            "quantity": 5
+                        }
+                    ]
+                }
+            ]
+
+    ```
+
+    ```
+
+- update order status **`token required`**
+
+  - HTTP verb `PUT`
+  - Endpoint:- `/orders`
+  - Request Body
+
+    ```json
+    {
+      "id": "1",
+      "status": "complete"
+    }
+    ```
+
+  - Response Body -- `the order after update`
+
+        ```json
+                {
+            "id": 1,
+            "status": "complete",
+            "user_id": 1
+        }
+
+    ```
+
+    ```
+
+- delete order **`token required`**
+
+  - HTTP verb `DELETE`
+  - Endpoint:- `/orders`
+  - Request Body
+
+    ```json
+    {
+      "id": "1"
+    }
+    ```
+
+  - Response Body -- `the order that was just deleted`
+
+        ```json
+                  {
+            "id": 1,
+            "status": "complete",
+            "user_id": 1
+        }
+
+    ```
+
+
+
+    ```
+
 ## Data Shapes
 
 #### Product
