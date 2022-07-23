@@ -19,5 +19,4 @@ users_routes(app);
 products_routes(app);
 orders_routes(app);
 orderProducts_routes(app);
-app.listen(parseInt(process.env.PORT + ""), () => {
-});
+app.listen(parseInt(process.env.PORT + ''));

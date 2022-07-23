@@ -23,5 +23,4 @@ exports.app.use(express_1.default.json());
 (0, products_1.default)(exports.app);
 (0, orders_1.default)(exports.app);
 (0, orderProducts_1.default)(exports.app);
-exports.app.listen(parseInt(process.env.PORT + ""), () => {
-});
+exports.app.listen(parseInt(process.env.PORT + ''));
