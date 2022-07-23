@@ -27,7 +27,6 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 
-<!-- start -->
 
 - create user
 
@@ -50,9 +49,6 @@ These are the notes from a meeting with the frontend developer that describe wha
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyIjp7ImlkIjoxLCJmaXJzdG5hbWUiOiJzaGVoYWIiLCJsYXN0bmFtZSI6ImdhZCIsInVzZXJuYW1lIjoic2hlaGFiZ2FkIiwicGFzc3dvcmQiOiIkMmIkMTAkdGJIbG5CZWI4bGE1R2s3OFNJQTluZS5ORnJHMlp5eE5SclJzQ05JaHBJWWRlRG9uL2xkVi4ifSwiaWF0IjoxNjU4NTQyNDk4fQ.kMpRu6aYuCnnrI2_1n_iWbJWSwabBeuGpgCT3mC0LQo"
             ```
 
-        <!-- end -->
-
-    <!-- start -->
 
 - get users **`token required`**
 
@@ -146,7 +142,6 @@ These are the notes from a meeting with the frontend developer that describe wha
           }
         ```
 
-    <!-- end -->
 
 - get Products
 
@@ -232,12 +227,12 @@ These are the notes from a meeting with the frontend developer that describe wha
   - Response Body -- `the product after update`
 
         ```json
-
         {
           "id": 2,
           "name": "Product two",
           "price": 12
         }
+        ```
 
 - delete a Product **`token required`**
 
@@ -260,6 +255,7 @@ These are the notes from a meeting with the frontend developer that describe wha
           "name": "Product two",
           "price": 12
         }
+        ```
 
 - create order **`token required`**
 
@@ -299,7 +295,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 
     ```
 
-    ```
+    
 
 - get orders **`token required`**
 
@@ -330,7 +326,6 @@ These are the notes from a meeting with the frontend developer that describe wha
 
     ```
 
-    ```
 
 - get order with an id **`token required`**
 
@@ -361,7 +356,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 
     ```
 
-    ```
+    
 
 - get all orders with a certain user with a provided id has made **`token required`**
 
@@ -393,7 +388,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 
     ```
 
-    ```
+    
 
 - update order status **`token required`**
 
@@ -419,7 +414,6 @@ These are the notes from a meeting with the frontend developer that describe wha
 
     ```
 
-    ```
 
 - delete order **`token required`**
 
@@ -446,7 +440,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 
 
-    ```
+
 
 ## Data Shapes
 
