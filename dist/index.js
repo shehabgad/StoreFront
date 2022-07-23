@@ -10,9 +10,9 @@ const products_1 = __importDefault(require("./handlers/products"));
 const orders_1 = __importDefault(require("./handlers/orders"));
 const orderProducts_1 = __importDefault(require("./handlers/orderProducts"));
 const cors_1 = __importDefault(require("cors"));
-// const cors = require('cors')
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 exports.app = (0, express_1.default)();
-const address = '0.0.0.0:3000';
 const corsOptions = {
     origin: 'https://somedomain.com',
     optionSuccessStatus: 200,
@@ -23,6 +23,5 @@ exports.app.use(express_1.default.json());
 (0, products_1.default)(exports.app);
 (0, orders_1.default)(exports.app);
 (0, orderProducts_1.default)(exports.app);
-exports.app.listen(3000, () => {
-    console.log(`starting app on : ${address}`);
+exports.app.listen(parseInt(process.env.PORT + ""), () => {
 });

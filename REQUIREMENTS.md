@@ -48,3 +48,48 @@ These are the notes from a meeting with the frontend developer that describe wha
 - quantity of each product in the order
 - user_id
 - status of order (active or complete)
+
+## data schema
+
+### users schema
+
+```sql
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  firstName VARCHAR(255) NOT NULL,
+  lastName VARCHAR(255) NOT NULL,
+  userName VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
+```
+
+### products schema
+
+```sql
+CREATE TABLE products (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  price float NOT NULL
+);
+```
+
+### orders schema
+
+```sql
+CREATE TABLE orders (
+  id SERIAL PRIMARY KEY,
+  status VARCHAR(255) NOT NULL,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+```
+
+### orderProducts schema
+
+```sql
+CREATE TABLE orderProducts (
+  order_id INTEGER REFERENCES orders(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  product_id INTEGER REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  quantity INTEGER NOT NULL,
+  PRIMARY KEY (order_id,product_id)
+);
+```
