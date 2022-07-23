@@ -59,7 +59,7 @@ Before submitting your project, spin it up and test each endpoint. If each one r
 ### installing
 
 to install all required dependencies run
-`bash npm install`
+`npm install`
 
 ### setup enviroment
 
@@ -85,5 +85,5 @@ PG_PORT = 5432
 BCRYPT_PASSWORD = 56533711
 SALT_ROUNDS = 10
 PEPPER = a-pepper-heh
-TOKEN_SECRET = changeesisgood565!!
+TOKEN_SECRET = my-secret-password
 ```
