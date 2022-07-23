@@ -87,3 +87,10 @@ SALT_ROUNDS = 10
 PEPPER = a-pepper-heh
 TOKEN_SECRET = my-secret-password
 ```
+### running the Application
+to start the application run
+`npm run start`
+
+### testing the Application
+to test the application run
+`npm run test`
