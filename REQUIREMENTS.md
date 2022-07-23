@@ -435,8 +435,119 @@ These are the notes from a meeting with the frontend developer that describe wha
             "status": "complete",
             "user_id": 1
         }
+       ```
+- get orderProducts **`token required`**
 
+  - HTTP verb `GET`
+  - Endpoint:- `/orderProducts`
+  - Request Body
+
+    ```json
+    N/A
     ```
+
+  - Response Body -- `array of all order products`
+
+        ```json
+           [
+          {
+        "order_id": 2,
+        "product_id": 1,
+        "quantity": 4
+         }
+        ]
+       ```
+- get all orderProducts with a certain order id**`token required`**
+
+  - HTTP verb `GET`
+  - Endpoint:- `/orderProducts/:id`
+  - Request Body
+
+    ```json
+    N/A
+    ```
+
+  - Response Body -- `array of all order products`
+
+        ```json
+           [
+          {
+        "order_id": 2,
+        "product_id": 1,
+        "quantity": 4
+         }
+        ]
+       ```
+- create orderProducts with order id, product id and quantity **`token required`**
+
+  - HTTP verb `POST`
+  - Endpoint:- `/orderProducts`
+  - Request Body
+
+    ```json
+    {
+      "order_id": "2",
+      "product_id": "3",
+      "quantity": "4"
+    }
+    ```
+
+  - Response Body -- `the order product that was just made`
+
+        ```json
+              {
+          "order_id": 2,
+          "product_id": 3,
+          "quantity": 4
+            }
+        
+       ```
+- update orderProducts with order id, product id and quantity **`token required`**
+
+  - HTTP verb `PUT`
+  - Endpoint:- `/orderProducts`
+  - Request Body
+
+    ```json
+    {
+      "order_id": "2",
+      "product_id": "3",
+      "quantity": "18"
+    }
+    ```
+
+  - Response Body -- `the order product after update`
+
+        ```json
+                  {
+            "order_id": 2,
+            "product_id": 3,
+            "quantity": 18
+           }
+       ```
+- delete orderProducts with order id, product id **`token required`**
+
+  - HTTP verb `DELETE`
+  - Endpoint:- `/orderProducts`
+  - Request Body
+
+    ```json
+    {
+      "order_id": "2",
+      "product_id": "3",
+    }
+    ```
+
+  - Response Body -- `the order product that was just deleted`
+
+        ```json
+                {
+          "order_id": 2,
+          "product_id": 3,
+          "quantity": 18
+      }
+       ```
+
 
 
 
