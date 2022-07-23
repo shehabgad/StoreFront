@@ -540,12 +540,13 @@ These are the notes from a meeting with the frontend developer that describe wha
 
   - Response Body -- `the order product that was just deleted`
 
-        ```json
+      ```json
                 {
           "order_id": 2,
           "product_id": 3,
           "quantity": 18
       }
+       ```
        ```
 
 
