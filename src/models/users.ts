@@ -12,7 +12,6 @@ export type User = {
   password: string;
 };
 export class Users {
-  
   async index(): Promise<User[]> {
     try {
       const conn = await client.connect();
@@ -35,32 +34,52 @@ export class Users {
       throw new Error(`cannot get product ${err}`);
     }
   }
-  async create(userName: string, firstName: string, lastName: string, password: string): Promise<User> {
+  async create(
+    userName: string,
+    firstName: string,
+    lastName: string,
+    password: string
+  ): Promise<User> {
     try {
       const conn = await client.connect();
       const sql =
         'INSERT INTO users (userName,firstName,lastName,password) VALUES ($1,$2,$3,$4) RETURNING *';
       const salt_rounds: string = '' + SALT_ROUNDS;
       const hash = bcrypt.hashSync(password + PEPPER, parseInt(salt_rounds));
-      const result = await conn.query(sql, [userName,firstName,lastName, hash]);
+      const result = await conn.query(sql, [
+        userName,
+        firstName,
+        lastName,
+        hash,
+      ]);
       conn.release();
       return result.rows[0];
     } catch (err) {
       throw new Error(`cannot create user ${err}`);
     }
   }
-  async updateOne(firstName: string, lastName: string, password:string, userName:string): Promise<User>
-  {
+  async updateOne(
+    firstName: string,
+    lastName: string,
+    password: string,
+    userName: string
+  ): Promise<User> {
     try {
-    const conn = await client.connect();
-    const salt_rounds: string = '' + SALT_ROUNDS;
-    const hash = bcrypt.hashSync(password + PEPPER, parseInt(salt_rounds));
-    const sql = "UPDATE users SET firstName =($1), lastName =($2), password=($3) WHERE userName = ($4) RETURNING *"
-    const result = await conn.query(sql,[firstName,lastName,hash,userName])
-    conn.release();
-    return result.rows[0];
+      const conn = await client.connect();
+      const salt_rounds: string = '' + SALT_ROUNDS;
+      const hash = bcrypt.hashSync(password + PEPPER, parseInt(salt_rounds));
+      const sql =
+        'UPDATE users SET firstName =($1), lastName =($2), password=($3) WHERE userName = ($4) RETURNING *';
+      const result = await conn.query(sql, [
+        firstName,
+        lastName,
+        hash,
+        userName,
+      ]);
+      conn.release();
+      return result.rows[0];
     } catch (err) {
-      throw new Error("cannot update user")
+      throw new Error('cannot update user');
     }
   }
   async login(userName: string, password: string): Promise<User | null> {
@@ -70,7 +89,6 @@ export class Users {
     if (result.rows.length) {
       const user = result.rows[0];
       if (bcrypt.compareSync(password + PEPPER, user.password)) {
-        
         return user;
       }
     }

@@ -29,6 +29,21 @@ describe('Users model ', () => {
         user = result.rows[0];
         conn.release();
     }));
+    afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const conn = yield database_1.default.connect();
+            let sql = "DELETE FROM users;\nALTER SEQUENCE users_id_seq RESTART WITH 1;";
+            yield conn.query(sql);
+            sql = "DELETE FROM products;\nALTER SEQUENCE products_id_seq RESTART WITH 1;";
+            yield conn.query(sql);
+            sql = "DELETE FROM orders;\nALTER SEQUENCE orders_id_seq RESTART WITH 1;";
+            yield conn.query(sql);
+            conn.release();
+        }
+        catch (err) {
+            throw new Error(err + "");
+        }
+    }));
     it("should have an index method", () => {
         expect(store.index).toBeDefined();
     });

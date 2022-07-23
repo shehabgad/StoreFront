@@ -7,7 +7,7 @@
     "start": "rm -rf ./js/ && tsc && node dist/index.js",
     "start-test": "cross-env ENV=test node dist/index.js",
     "test": "db-migrate reset -e test && db-migrate up -e test && tsc && cross-env ENV=test jasmine && db-migrate reset -e test",
-    "format": "prettier --write src/**/*.ts",
+    "format": "prettier --write src/**/*.ts && prettier --write **/*.ts && prettier --write src/tests/**/*.ts",
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix"
   },

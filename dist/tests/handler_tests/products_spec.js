@@ -8,20 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authorization = void 0;
-const jwt = require('jsonwebtoken');
-const authorization = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const header = '' + req.headers.authorization;
-        const token = header.split(' ')[1];
-        jwt.verify(token, process.env.TOKEN_SECRET);
-    }
-    catch (err) {
-        res.status(401);
-        res.json("Acess denied, invalid token");
-        return;
-    }
-    next();
+const supertest_1 = __importDefault(require("supertest"));
+const index_1 = require("../../index");
+const request = (0, supertest_1.default)(index_1.app);
+describe('Testing products endpoint responses', () => {
+    it('get request to /products should return status code 200', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield request.get('/products');
+        expect(response.status).toBe(200);
+    }));
 });
-exports.authorization = authorization;

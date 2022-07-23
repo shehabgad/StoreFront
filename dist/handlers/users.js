@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const users_1 = require("../models/users");
-const authorize_1 = __importDefault(require("../middlewares/authorize"));
+const authorize_1 = require("../middlewares/authorize");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const store = new users_1.Users();
 const TOKEN_SECRET = process.env.TOKEN_SECRET + "";
@@ -49,10 +49,10 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     res.json(result);
 });
 const user_routes = (app) => {
-    app.get('/users', authorize_1.default, index);
-    app.get('/users/:username', authorize_1.default, getUser);
+    app.get('/users', authorize_1.authorization, index);
+    app.get('/users/:username', authorize_1.authorization, getUser);
     app.post('/users', signUp);
     app.post('/users/login', login);
-    app.put('/users', authorize_1.default, updateUser);
+    app.put('/users', authorize_1.authorization, updateUser);
 };
 exports.default = user_routes;

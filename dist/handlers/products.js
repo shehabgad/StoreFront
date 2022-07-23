@@ -8,12 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const products_1 = require("../models/products");
-const authorize_1 = __importDefault(require("../middlewares/authorize"));
+const authorize_1 = require("../middlewares/authorize");
 const store = new products_1.Products();
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const products = yield store.index();
@@ -38,8 +35,8 @@ const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 const products_routes = (app) => {
     app.get('/products', index);
     app.get('/products/:id', getProduct);
-    app.post('/products', authorize_1.default, createProduct);
-    app.put('/products', authorize_1.default, updateProduct);
-    app.delete('/products', authorize_1.default, deleteProduct);
+    app.post('/products', authorize_1.authorization, createProduct);
+    app.put('/products', authorize_1.authorization, updateProduct);
+    app.delete('/products', authorize_1.authorization, deleteProduct);
 };
 exports.default = products_routes;

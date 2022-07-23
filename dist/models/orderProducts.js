@@ -36,7 +36,7 @@ class OrderProducts {
                 const sql = `SELECT * FROM orderProducts WHERE order_id = '${order_id}'`;
                 const result = yield conn.query(sql);
                 conn.release();
-                return result.rows[0];
+                return result.rows;
             }
             catch (err) {
                 throw new Error(`cannot get order_product ${err}`);
@@ -80,7 +80,7 @@ class OrderProducts {
                 return result.rows[0];
             }
             catch (err) {
-                throw new Error("cannot delete order_product");
+                throw new Error(`cannot delete order_product ${err}`);
             }
         });
     }

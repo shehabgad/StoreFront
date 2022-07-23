@@ -12,22 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Plants = void 0;
-const database_1 = __importDefault(require("../database"));
-class Plants {
-    index() {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const conn = yield database_1.default.connect();
-                const sql = 'SELECT * FROM plants;';
-                const result = yield conn.query(sql);
-                conn.release();
-                return result.rows;
-            }
-            catch (err) {
-                throw new Error(`cannot get plants ${err}`);
-            }
-        });
-    }
-}
-exports.Plants = Plants;
+const supertest_1 = __importDefault(require("supertest"));
+const index_1 = require("../../index");
+const request = (0, supertest_1.default)(index_1.app);
+describe('Testing orderProducts endpoint responses', () => {
+    it('get request to /orderProducts should return status code 401', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield request.get('/orderProducts');
+        expect(response.status).toBe(401);
+    }));
+});

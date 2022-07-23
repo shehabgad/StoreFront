@@ -10,9 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const orders_1 = require("../models/orders");
+const authorize_1 = require("../middlewares/authorize");
 const store = new orders_1.Orders();
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const orders = yield store.index();
+    res.json(orders);
+});
+const indexByUserID = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const orders = yield store.indexByUserID(parseInt(req.params.user_id));
     res.json(orders);
 });
 const deleteOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -32,10 +37,11 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     res.json(result);
 });
 const orders_routes = (app) => {
-    app.get('/orders', index);
-    app.get('/orders/:id', getOrder);
-    app.post('/orders', createOrder);
-    app.put('/orders', updateOrder);
-    app.delete('/orders', deleteOrder);
+    app.get('/orders', authorize_1.authorization, index);
+    app.get('/orders/:id', authorize_1.authorization, getOrder);
+    app.get('/orders/user/:user_id', authorize_1.authorization, indexByUserID);
+    app.post('/orders', authorize_1.authorization, createOrder);
+    app.put('/orders', authorize_1.authorization, updateOrder);
+    app.delete('/orders', authorize_1.authorization, deleteOrder);
 };
 exports.default = orders_routes;

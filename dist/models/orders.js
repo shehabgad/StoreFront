@@ -24,10 +24,26 @@ class Orders {
                 const sql = 'SELECT * FROM orders;';
                 const result = yield conn.query(sql);
                 conn.release();
-                result.rows.forEach((order) => __awaiter(this, void 0, void 0, function* () {
-                    order.orderProducts = [];
-                    order.orderProducts.push(yield orderProductsStore.show(order.id));
-                }));
+                for (let i = 0; i < result.rows.length; i++) {
+                    result.rows[i].orderProducts = yield orderProductsStore.show(result.rows[i].id);
+                }
+                return result.rows;
+            }
+            catch (err) {
+                throw new Error(`cannot get orders ${err}`);
+            }
+        });
+    }
+    indexByUserID(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const conn = yield database_1.default.connect();
+                const sql = `SELECT * FROM orders WHERE user_id = ${id};`;
+                const result = yield conn.query(sql);
+                conn.release();
+                for (let i = 0; i < result.rows.length; i++) {
+                    result.rows[i].orderProducts = yield orderProductsStore.show(result.rows[i].id);
+                }
                 return result.rows;
             }
             catch (err) {
@@ -42,8 +58,7 @@ class Orders {
                 const sql = `SELECT * FROM orders WHERE id = ${id};`;
                 const result = yield conn.query(sql);
                 conn.release();
-                result.rows[0].orderProducts = [];
-                result.rows[0].orderProducts.push(yield orderProductsStore.show(id));
+                result.rows[0].orderProducts = yield orderProductsStore.show(id);
                 return result.rows[0];
             }
             catch (err) {
@@ -59,10 +74,10 @@ class Orders {
                 const result = yield conn.query(sql, [status, user_id]);
                 conn.release();
                 result.rows[0].orderProducts = [];
-                console.log(result.rows[0].id);
-                products.forEach((product) => __awaiter(this, void 0, void 0, function* () {
-                    result.rows[0].orderProducts.push(yield orderProductsStore.create(result.rows[0].id, product.id, product.quantity));
-                }));
+                for (let i = 0; i < products.length; i++) {
+                    const orderProduct = yield orderProductsStore.create(result.rows[0].id, products[i].id, products[i].quantity);
+                    result.rows[0].orderProducts.push(orderProduct);
+                }
                 return result.rows[0];
             }
             catch (err) {
@@ -74,7 +89,7 @@ class Orders {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();
-                const sql = "UPDATE order SET status = ($1) WHERE id = ($2) RETURNING *";
+                const sql = "UPDATE orders SET status = ($1) WHERE id = ($2) RETURNING *";
                 const result = yield conn.query(sql, [status, id]);
                 conn.release();
                 return result.rows[0];
